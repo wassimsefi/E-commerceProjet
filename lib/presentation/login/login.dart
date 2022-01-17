@@ -1,3 +1,4 @@
+import 'package:complete_advanced_flutter/app/di.dart';
 import 'package:complete_advanced_flutter/presentation/login/login_viewmodel.dart';
 import 'package:complete_advanced_flutter/presentation/resources/assets_manager.dart';
 import 'package:complete_advanced_flutter/presentation/resources/color_manager.dart';
@@ -5,7 +6,6 @@ import 'package:complete_advanced_flutter/presentation/resources/routes_manager.
 import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
 import 'package:complete_advanced_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -15,8 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel =
-      LoginViewModel(null); // todo pass here login useCase
+  LoginViewModel _viewModel = instance<LoginViewModel>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -57,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<bool>(
-                    stream: _viewModel.outputsUserNameValid,
+                    stream: _viewModel.outputIsUserNameValid,
                     builder: (context, snapshot) {
                       return TextFormField(
                         keyboardType: TextInputType.emailAddress,
@@ -77,7 +76,7 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<bool>(
-                    stream: _viewModel.outputsIsPasswordValid,
+                    stream: _viewModel.outputIsPasswordValid,
                     builder: (context, snapshot) {
                       return TextFormField(
                         keyboardType: TextInputType.visiblePassword,
@@ -97,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                     padding: EdgeInsets.only(
                         left: AppPadding.p28, right: AppPadding.p28),
                     child: StreamBuilder<bool>(
-                      stream: _viewModel.outputsIsAllInputsValid,
+                      stream: _viewModel.outputIsAllInputsValid,
                       builder: (context, snapshot) {
                         return SizedBox(
                           width: double.infinity,
